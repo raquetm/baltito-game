@@ -1,0 +1,23 @@
+{% extends 'game/base.html' %}
+{% load static %}
+
+{% block title %}Updates - Baltito Game{% endblock %}
+
+{% block content %}
+<h1>LATEST UPDATES</h1>
+
+{% for update in updates %}
+<div class="card">
+    <h2>{{ update.title }}</h2>
+    <p><strong>{{ update.date }}</strong></p>
+    <p>{{ update.content }}</p>
+    {% if update.image %}
+    <img src="{{ update.image.url }}" alt="{{ update.title }}" class="balto-responsive" id="img-border">
+    {% endif %}
+</div>
+{% endfor %}
+<div class="end-message">
+    <p>You've reached the end of the updates. Stay tuned for more news!</p>
+</div>
+
+{% endblock %}

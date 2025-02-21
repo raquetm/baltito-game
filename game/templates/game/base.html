@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Baltito Game{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <header>
+        <div class="logo-title">
+            <h1><a class="index-link" href="{% url 'index' %}">BALTITO GAME <img src="{% static 'img/logo.png' %}" alt="Logo de BALTITO GAME" height="40px" /></a></h1>
+        </div>
+        <div class="login-buttons">
+            <a href="{% url 'login' %}" class="login-link">Log-in</a>
+            <a href="{% url 'register' %}" class="login-link">Register</a>
+        </div>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'trailer' %}">Trailer</a></li>
+            <li><a href="{% url 'updates' %}">Updates</a></li>
+            <li><a href="{% url 'team' %}">Team</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div class="sidebar-left">
+            <img src="{% static 'img/doggoIzq.jpg' %}" alt="Sidebar Left">
+        </div>
+        <div id="content-section">
+            {% block content %}{% endblock %}
+        </div>
+        <div class="sidebar-right">
+            <img src="{% static 'img/doggoDer.jpg' %}" alt="Sidebar Right">
+        </div>
+    </main>
+    <footer>
+        <p class="p-center-footer">&copy; 2024 BALTITO GAME. All rights reserved.</p>
+    </footer>
+</body>
+</html>
