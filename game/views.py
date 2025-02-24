@@ -1,25 +1,40 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from .models import Update
 
 def index(request):
     return render(request, 'game/index.html')
 
+@login_required(login_url="/users/login/")
 def about(request):
     return render(request, 'game/about.html')
 
+@login_required(login_url="/users/login/")
 def trailer(request):
     return render(request, 'game/trailer.html')
 
+@login_required(login_url="/users/login/")
 def updates(request):
-    updates = Update.objects.all().order_by('-date')
+    updates = Update.objects.all()
     return render(request, 'game/updates.html', {'updates': updates})
 
+@login_required(login_url="/users/login/")
 def team(request):
     return render(request, 'game/team.html')
 
-def play_game(request):
-    return render(request, 'game/play_game.html')
-
+@login_required(login_url="/users/login/")
 def leaderboard(request):
-    scores = UserScore.objects.all().order_by('-score')
-    return render(request, 'game/leaderboard.html', {'scores': scores})
+    return render(request, 'game/leaderboard.html')
+
+@login_required(login_url="/users/login/")
+def jump_game(request):
+    return render(request, 'game/jump_game.html')
+
+@login_required
+def single_review(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+    favorite_id = request.session.get("favorite_review")  # Evita errores si no hay favorito
+    is_favorite = str(review.id) == str(favorite_id)  # Comparar como strings
+
+    return render(request, "game/single_review.html", {"review": review, "is_favorite": is_favorite})
+

@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jump Game</title>
+    <link rel="stylesheet" href="{% static 'css/jump_game.css' %}">
+</head>
+<body>
+    <div class="game-container">
+        <div id="background" style="background-image: url('{% static 'img/game/backgroundGame.png' %}');"></div>
+        <div id="dog" class="dog">
+            <img src="{% static 'img/game/baltoWalking1.png' %}" alt="Balto">
+        </div>
+        <div id="flower" class="flower">
+            <img src="{% static 'img/game/flower.png' %}" alt="Flower">
+        </div>
+    </div>
+    <script src="{% static 'js/jump_game.js' %}"></script>
+</body>
+</html>

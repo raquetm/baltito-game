@@ -1,0 +1,71 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+.game-container {
+    position: relative;
+    width: 800px;
+    height: 500px;
+    border: 2px solid #702a6d;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.dog, .flower {
+    position: absolute;
+    bottom: 0;
+    width: 150px;
+    height: 150px;
+}
+
+.dog img, .flower img {
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes jump {
+    0% { bottom: 0; }
+    40% { bottom: 140px; } /* Subida más alta */
+    50% { bottom: 160px; } /* Punto más alto del salto */
+    60% { bottom: 140px; }
+    100% { bottom: 0; }
+}
+
+.dog.jump {
+    animation: jump 0.7s ease-out; /* Más fluido */
+}
+
+
+.flower {
+    right: -50px; 
+    animation: moveFlower 2s linear infinite;
+}
+
+@keyframes moveFlower {
+    0% { right: -50px; }
+    100% { right: 800px; } 
+}
+
+.game-container {
+    position: relative;
+    width: 800px;
+    height: 500px;
+    border: 2px solid #702a6d;
+    overflow: hidden;
+}
+
+#background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;  /* Asegura que la imagen se cubra todo */
+    background-repeat: repeat-x; /* Repite la imagen horizontalmente */
+    z-index: -1; /* Asegura que el fondo esté detrás de todo */
+}

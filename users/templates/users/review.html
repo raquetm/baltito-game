@@ -3,10 +3,12 @@
 {% block title %}Review{% endblock %}
 
 {% block content %}
-<h2>Review</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit Review</button>
-</form>
+<div class="form-container">
+    <h2>Leave a Review</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Review</button>
+    </form>
+</div>
 {% endblock %}
