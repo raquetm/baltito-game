@@ -5,8 +5,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/', include('users.urls')),  # URLs de autenticación
-    path('', include('game.urls')),  # URLs del juego
+    path('users/', include('users.urls')),  
+    path('', include('game.urls')),  
 ]
 
 if settings.DEBUG:

@@ -9,14 +9,25 @@
 </head>
 <body>
     <div class="game-container">
-        <div id="background" style="background-image: url('{% static 'img/game/backgroundGame.png' %}');"></div>
+        <div id="background" ></div>
         <div id="dog" class="dog">
             <img src="{% static 'img/game/baltoWalking1.png' %}" alt="Balto">
         </div>
         <div id="flower" class="flower">
             <img src="{% static 'img/game/flower.png' %}" alt="Flower">
         </div>
+        <div id="score" class="score">Score: 0</div>
     </div>
+<div id="gameOverModal" class="modal">
+    <div class="modal-content">
+        <h2>⋆˙⟡ Game Over ⟡˙⋆</h2>
+        <p id="playerScore"></p>
+        <button id="restartButton">Play again</button>
+        <button id="reviewButton">Make a review</button>
+        <button id="homeButton">Home</button>
+    </div>
+</div>
+
     <script src="{% static 'js/jump_game.js' %}"></script>
 </body>
 </html>

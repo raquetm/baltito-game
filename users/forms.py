@@ -3,6 +3,8 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import UserProfile, Review  # Asegúrate de importar UserProfile
 
+# tengo que arreglar bien todos los forms
+
 class UserRegistrationForm(forms.ModelForm):
     full_name = forms.CharField(max_length=100)
     subscribed = forms.BooleanField(required=False)

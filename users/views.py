@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegistrationForm, UserReviewForm
 
+#un cristo
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -10,7 +11,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            next_url = request.GET.get('next', 'index')  # Redirigir a la página en la que estaba
+            next_url = request.GET.get('next', 'index')  
             return redirect(next_url)
         else:
             return render(request, 'users/login.html', {'error': 'Invalid credentials'})
@@ -21,7 +22,7 @@ def register_view(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')  # Redirige al login después de registrarse
+            return redirect('login')  
     else:
         form = UserRegistrationForm()
     return render(request, 'users/form.html', {'form': form})
@@ -42,6 +43,7 @@ def logout_view(request):
     logout(request)
     return redirect('index')
 
+#basura de sessions en blog site que no se ni si haré aqui, BORRAR
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
@@ -56,7 +58,7 @@ class SingleReviewView(DetailView):
         context = super().get_context_data(**kwargs)
         loaded_review = self.object
         request = self.request
-        favorite_id = request.session.get("favorite_review")  # Evita error si no existe aún
+        favorite_id = request.session.get("favorite_review")  
         context["is_favorite"] = favorite_id == str(loaded_review.id)
         return context
 
@@ -65,7 +67,7 @@ def add_favorite(request):
     if request.method == "POST":
         review_id = request.POST.get("review_id")
         if review_id:
-            request.session["favorite_review"] = review_id  # Guarda en la sesión
+            request.session["favorite_review"] = review_id  
     return redirect("single_review", pk=review_id)
 
 

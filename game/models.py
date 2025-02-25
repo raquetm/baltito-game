@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import UserProfile
 
+# no la uso todavía:(
 class UserScore(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     score = models.IntegerField()

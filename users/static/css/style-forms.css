@@ -1,12 +1,22 @@
-/* Reset general de márgenes y padding */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
 }
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  color: white;
+  margin-top: 1%;
+  padding: 10px 20px;
+  font-family: 'Shadows Into Light';
+  opacity: 0.7;
+  border-radius: 10px;
+}
 
-/* Fondo de la página */
 body {
   background-color: #ffffff;
   display: flex;
@@ -17,34 +27,31 @@ body {
   position: relative;
 }
 
-/* Contenedor principal con la imagen de fondo */
 .background-image {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh; /* Esto asegura que la imagen de fondo cubra toda la pantalla */
-  background-image: url('/static/img/background.png'); /* Ruta correcta a tu imagen */
-  background-size: cover; /* Hace que la imagen cubra toda el área */
-  background-position: center center; /* Centra la imagen */
-  background-attachment: fixed; /* Evita que la imagen se mueva al hacer scroll */
-  z-index: -1; /* Asegura que la imagen quede detrás del contenido */
-  opacity: 0.8; /* Ajusta la opacidad para mejorar la visibilidad */
+  height: 100vh; 
+  background-image: url('/static/img/background.png'); /* esto ta feo aqui pero bueno ya se arreglará*/
+  background-size: cover; 
+  background-position: center center; 
+  background-attachment: fixed; 
+  z-index: -1; 
+  opacity: 0.9; 
 }
 
-/* Contenedor del contenido */
 .content-container {
   display: flex;
-  justify-content: center; /* Centra el contenido horizontalmente */
-  align-items: center; /* Centra el contenido verticalmente */
-  height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+  justify-content: center; 
+  align-items: top; 
+  height: 70vh; 
   padding: 20px;
   position: relative;
 }
-/* Estilo para los formularios */
 .form-container,
 .login-container {
-  background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro y semitransparente */
+  background-color: rgba(0, 0, 0, 0.7); 
   color: white;
   padding: 40px;
   border-radius: 10px;
@@ -52,7 +59,8 @@ body {
   max-width: 400px;
   width: 100%;
   text-align: center;
-  z-index: 1; /* Asegura que el formulario quede sobre la imagen */
+  z-index: 1; 
+  margin-top: 0;
 }
 
 h1, h2 {
@@ -98,24 +106,22 @@ button[type='submit']:hover {
   background-color: #5b2056;
 }
 
-/* Estilo para enlaces */
 a {
-  color: #c969c4;
+  color: white;
   text-decoration: none;
   font-weight: bold;
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
+  color: #ec8de8;
 }
 
-/* Estilo para mensajes de error */
-.error-message {
+.error-message { /* esto es para los mensajes de error que usaba en php pero creo que aqui no se necesita, BORRAR*/
   color: red;
   margin-bottom: 15px;
 }
 
-/* Estilos del pie de página */
 footer {
   width: 100%;
   background-color: #702a6d;
@@ -125,7 +131,6 @@ footer {
   font-family: 'Shadows Into Light';
 }
 
-/* Responsividad para pantallas pequeñas */
 @media (max-width: 768px) {
   header {
     flex-direction: column;

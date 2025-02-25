@@ -131,5 +131,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 
-SESSION_COOKIE_AGE = 60 * 30  # 30 minutos
+SESSION_COOKIE_AGE = 60 * 30  # 30 minutos, igual lo quito y ya
 

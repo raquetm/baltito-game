@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/style-forms.css' %}">
 </head>
 <body>
-    <!-- Barra de navegación -->
+    <header>
     <nav class="navbar">
         <a href="{% url 'index' %}">Home</a>
         {% if user.is_authenticated %}
@@ -18,11 +18,10 @@
             <a href="{% url 'register' %}">Register</a>
         {% endif %}
     </nav>
-
-    <!-- Imagen de fondo -->
+    </header>
+{% comment %} esto creo que ni funciona: {% endcomment %}
     <div class="background-image"></div> 
     
-    <!-- Contenedor del contenido principal -->
     <div class="content-container">
         <main>
             {% block content %}

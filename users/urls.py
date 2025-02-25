@@ -9,7 +9,7 @@ urlpatterns = [
     path('register/', views.register_view, name='register'),
     path('review/', views.review_view, name='review'),
 
-    # Nueva ruta para favoritos
+    # esto igual ni lo hago
     path("review/<int:pk>/", SingleReviewView.as_view(), name="single_review"),
     path("favorite/", add_favorite, name="add_favorite"),
 ]
