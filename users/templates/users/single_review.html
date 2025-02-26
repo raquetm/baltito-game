@@ -1,18 +1,16 @@
-{% extends 'users/base_users.html' %}
-
-{% block title %}Review Details{% endblock %}
+{% extends "users/base_users.html.html" %}
 
 {% block content %}
-    <h2>{{ review.title }}</h2>
-    <p>{{ review.content }}</p>
-    
-    {% if is_favorite %}
-        <p><strong>This is my favorite review!</strong></p>
-    {% else %}
-        <form action="{% url 'add_favorite' %}" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="review_id" value="{{ review.id }}">
-            <button type="submit">Mark as Favorite</button>
-        </form>
-    {% endif %}
+  <h1>{{ review.title }}</h1>
+  <p>{{ review.content }}</p>
+  <p>Rating: {{ review.rating }}</p>
+  <p>By: {{ review.user.username }}</p>
+  <form method="post" action="{% url 'add_favorite' %}">
+    {% csrf_token %}
+    <input type="hidden" name="review_id" value="{{ review.id }}">
+    <button type="submit">Add to Favorites</button>
+  </form>
+  {% if is_favorite %}
+    <p>This is your favorite review!</p>
+  {% endif %}
 {% endblock %}

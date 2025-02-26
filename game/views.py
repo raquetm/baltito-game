@@ -1,40 +1,54 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Update
-#AYUDA
-def index(request):
-    return render(request, 'game/index.html')
+from django.utils.decorators import method_decorator
+from django.views import View
+from django.views.generic import TemplateView, ListView
+from .models import Update, UserScore
+from users.models import UserProfile
 
-# @login_required(login_url="/users/login/")
-def about(request):
-    return render(request, 'game/about.html')
+class IndexView(TemplateView):
+    template_name = 'game/index.html'
 
-# @login_required(login_url="/users/login/")
-def trailer(request):
-    return render(request, 'game/trailer.html')
+class AboutView(TemplateView):
+    template_name = 'game/about.html'
 
-# @login_required(login_url="/users/login/")
-def updates(request):
-    updates = Update.objects.all()
-    return render(request, 'game/updates.html', {'updates': updates})
+class TrailerView(TemplateView):
+    template_name = 'game/trailer.html'
 
-# @login_required(login_url="/users/login/")
-def team(request):
-    return render(request, 'game/team.html')
+class UpdatesView(ListView):
+    model = Update
+    template_name = 'game/updates.html'
+    context_object_name = 'updates'
 
-@login_required(login_url="/users/login/")
-def leaderboard(request):
-    return render(request, 'game/leaderboard.html')
+class TeamView(TemplateView):
+    template_name = 'game/team.html'
 
-@login_required(login_url="/users/login/")
-def jump_game(request):
-    return render(request, 'game/jump_game.html')
+@method_decorator(login_required(login_url="/users/login/"), name='dispatch')
+class LeaderboardView(ListView):
+    model = UserScore
+    template_name = 'game/leaderboard.html'
+    context_object_name = 'scores'
 
-@login_required #esto ya veré si hacerlo o no
-def single_review(request, pk):
-    review = get_object_or_404(Review, pk=pk)
-    favorite_id = request.session.get("favorite_review") 
-    is_favorite = str(review.id) == str(favorite_id) 
+    def get_queryset(self):
+        scores = UserScore.objects.all().order_by('-score')[:20] 
+        print(f"Scores in DB: {scores}")  
+        return scores
 
-    return render(request, "game/single_review.html", {"review": review, "is_favorite": is_favorite})
+
+@method_decorator(login_required(login_url="/users/login/"), name='dispatch')
+class JumpGameView(TemplateView):
+    template_name = 'game/jump_game.html'
+
+@login_required
+def save_score(request):
+    if request.method == "POST":
+        score = request.POST.get('score')
+        if score:
+            user = request.user  # O usar el perfil del usuario si es necesario
+            UserScore.objects.create(user=user.userprofile, score=score)
+
+            # Redirige a la página de leaderboard después de guardar el puntaje
+            return redirect('leaderboard')  # Reemplaza 'leaderboard' con la URL correcta si es necesario
+
+    return redirect('home')
 

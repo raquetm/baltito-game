@@ -4,116 +4,161 @@ document.addEventListener("DOMContentLoaded", () => {
     const flower = document.getElementById("flower");
     const scoreElement = document.getElementById("score");
     const background = document.getElementById("background");
+    const saveScoreForm = document.getElementById("saveScoreForm");
+    const scoreInput = document.getElementById("scoreInput");
+
+    const instructionsModal = document.getElementById("instructionsModal");
+    const playButton = document.getElementById("playButton");
 
     let isJumping = false;
-    let isWalking = true;
+    let isWalking = false;
     let walkFrame = 1;
     let score = 0;
     let gameOver = false;
     let backgroundPosition = 0;
-    let speed = 2; 
+    let speed = 2;
+    let gameStarted = false;
+    let animationFrameId;
+    let scoreInterval;
+    let walkInterval;
 
-    // alternar entre las imágenes de balto caminando
-    function walkAnimation() {
-        if (isWalking) {
-            walkFrame = walkFrame === 1 ? 2 : 1;
-            dogImg.src = `/static/img/game/baltoWalking${walkFrame}.png`; 
+    function startWalkingAnimation() {
+        if (!walkInterval) {
+            walkInterval = setInterval(() => {
+                if (!isJumping && !gameOver && gameStarted) {
+                    walkFrame = walkFrame === 1 ? 2 : 1;
+                    dogImg.src = `/static/img/game/baltoWalking${walkFrame}.png`;
+                }
+            }, 300); 
         }
     }
 
-    setInterval(walkAnimation, 300); // cambia de imagen cada 0.3s
-
-   function jump() {
-    if (!isJumping && !gameOver) {
-        isJumping = true;
-        isWalking = false;
-        dogImg.src = `/static/img/game/baltoJumps.png`;
-
-        dog.classList.add("jump");
-
-        // asegurar que la animación termine antes de resetear
-        setTimeout(() => {
-            dog.classList.remove("jump");
-            isJumping = false;
-            isWalking = true;
-        }, 700);
+    function stopWalkingAnimation() {
+        clearInterval(walkInterval);
+        walkInterval = null;
     }
-}
 
-document.addEventListener("keydown", (event) => {
-    if ((event.code === "Space" || event.key === "ArrowUp") && !gameOver) {
-        jump();
+    function jump() {
+        if (!isJumping && !gameOver && gameStarted) {
+            isJumping = true;
+            isWalking = false;
+            stopWalkingAnimation(); 
+
+            dogImg.src = `/static/img/game/baltoJumps.png`;
+            dog.classList.add("jump");
+
+            setTimeout(() => {
+                dog.classList.remove("jump");
+                isJumping = false;
+                isWalking = true;
+                startWalkingAnimation(); 
+            }, 700);
+        }
     }
-});
 
-function checkCollision() {
-    const dogRect = dog.getBoundingClientRect();
-    const flowerRect = flower.getBoundingClientRect();
-
-    //zona de colisión reducida
-    const collisionMarginX = 70; 
-    const collisionMarginY = 40; 
-
-    if (
-        dogRect.left + collisionMarginX < flowerRect.right - collisionMarginX &&
-        dogRect.right - collisionMarginX > flowerRect.left + collisionMarginX &&
-        dogRect.top + collisionMarginY < flowerRect.bottom - collisionMarginY &&
-        dogRect.bottom - collisionMarginY > flowerRect.top + collisionMarginY
-    ) {
-        gameOver = true;
-        showGameOverModal(); // mostrar la ventana de Game Over
-    }
-}
-
-function showGameOverModal() {
-    const playerName = prompt("Input your name:") || "Anonymous player"; // pedir nombre del jugador
-    const modal = document.getElementById("gameOverModal");
-    const scoreText = document.getElementById("playerScore");
-
-    scoreText.textContent = `${playerName}, your score is: ${score}`;
-    modal.style.display = "flex"; 
-
-    // reiniciar el juego
-    document.getElementById("restartButton").addEventListener("click", () => {
-        location.reload(); 
+    document.addEventListener("keydown", (event) => {
+        if ((event.code === "Space" || event.key === "ArrowUp") && !gameOver && gameStarted) {
+            jump();
+        }
     });
 
-    // ir a la página de reseñas 
-    document.getElementById("reviewButton").addEventListener("click", () => {
-        window.location.href = "";
+    function checkCollision() {
+        if (!gameStarted || gameOver) return;
+
+        const dogRect = dog.getBoundingClientRect();
+        const flowerRect = flower.getBoundingClientRect();
+
+        const collisionMarginX = 70;
+        const collisionMarginY = 40;
+
+        if (
+            dogRect.left + collisionMarginX < flowerRect.right - collisionMarginX &&
+            dogRect.right - collisionMarginX > flowerRect.left + collisionMarginX &&
+            dogRect.top + collisionMarginY < flowerRect.bottom - collisionMarginY &&
+            dogRect.bottom - collisionMarginY > flowerRect.top + collisionMarginY
+        ) {
+            gameOver = true;
+            showGameOverModal();
+        }
+    }
+
+    function showGameOverModal() {
+        const modal = document.getElementById("gameOverModal");
+        const scoreText = document.getElementById("playerScore");
+
+        scoreText.textContent = `Your score is: ${score}`;
+        scoreInput.value = score;
+
+        console.log("📤 Score set in input:", scoreInput.value);
+
+        modal.style.display = "flex";
+
+        stopGame();
+
+        document.getElementById("restartButton").addEventListener("click", () => {
+            location.reload();
+        });
+
+        document.getElementById("homeButton").addEventListener("click", () => {
+            window.location.href = "/";
+        });
+    }
+
+    function stopGame() {
+        gameStarted = false;
+        flower.classList.remove("playing");
+        cancelAnimationFrame(animationFrameId);
+        clearInterval(scoreInterval);
+        stopWalkingAnimation(); 
+    }
+
+    saveScoreForm.addEventListener("submit", function (event) {
+        scoreInput.value = score;
+
+        if (!scoreInput.value || isNaN(scoreInput.value) || scoreInput.value <= 0) {
+            event.preventDefault();
+            console.error("❌ No score provided!");
+            alert("Error: Score is missing!");
+        } else {
+            console.log("✅ Score sent successfully:", scoreInput.value);
+            window.location.href = "/leaderboard/";
+        }
     });
 
-    // ir a la página de inicio
-    document.getElementById("homeButton").addEventListener("click", () => {
-        window.location.href = ""; 
-    });
-}
-
-function updateScore() {
-        if (!gameOver) {
+    function updateScore() {
+        if (!gameOver && gameStarted) {
             score++;
             scoreElement.textContent = `Score: ${score}`;
         }
     }
 
-    setInterval(updateScore, 100); // incrementa la puntuación cada 0.1s
-
-function gameLoop() {
-        if (!gameOver) {
+    function gameLoop() {
+        if (!gameOver && gameStarted) {
             checkCollision();
-            requestAnimationFrame(gameLoop);
-        }
-}
-function moveBackground() {
-        if (!gameOver) {
-            backgroundPosition -= speed; 
-            background.style.backgroundPosition = `${backgroundPosition}px 0`; 
-            requestAnimationFrame(moveBackground); 
+            animationFrameId = requestAnimationFrame(gameLoop);
         }
     }
 
-    moveBackground(); 
+    function moveBackground() {
+        if (!gameOver && gameStarted) {
+            backgroundPosition -= speed;
+            background.style.backgroundPosition = `${backgroundPosition}px 0`;
+            animationFrameId = requestAnimationFrame(moveBackground);
+        }
+    }
 
-    gameLoop(); // inicia el bucle del juego
+    instructionsModal.style.display = "flex";
+
+    playButton.addEventListener("click", () => {
+        instructionsModal.style.display = "none";
+        gameStarted = true;
+        isWalking = true;
+
+        flower.classList.add("playing");
+
+        moveBackground();
+        gameLoop();
+        startWalkingAnimation(); 
+        scoreInterval = setInterval(updateScore, 100);
+    });
 });
-

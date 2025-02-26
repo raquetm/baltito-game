@@ -1,12 +1,13 @@
 from django.urls import path
-from . import views
+from .views import IndexView, AboutView, TrailerView, UpdatesView, TeamView, LeaderboardView, JumpGameView, save_score
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('about/', views.about, name='about'),
-    path('trailer/', views.trailer, name='trailer'),
-    path('updates/', views.updates, name='updates'),
-    path('team/', views.team, name='team'),
-    path('leaderboard/', views.leaderboard, name='leaderboard'),
-    path('jump_game/', views.jump_game, name='jump_game'),
+    path('', IndexView.as_view(), name='index'),
+    path('about/', AboutView.as_view(), name='about'),
+    path('trailer/', TrailerView.as_view(), name='trailer'),
+    path('updates/', UpdatesView.as_view(), name='updates'),
+    path('team/', TeamView.as_view(), name='team'),
+    path('leaderboard/', LeaderboardView.as_view(), name='leaderboard'),
+    path('jump_game/', JumpGameView.as_view(), name='jump_game'),
+    path('save_score/', save_score, name='save_score'),
 ]

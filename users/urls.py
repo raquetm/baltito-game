@@ -1,15 +1,12 @@
 from django.urls import path
-from . import views
-from .views import SingleReviewView, add_favorite
-
+from .views import LoginView, LogoutView, RegisterView, ReviewView, SingleReviewView, AddFavoriteView, ReviewListView
 
 urlpatterns = [
-    path('login/', views.login_view, name='login'),
-    path('logout/', views.logout_view, name='logout'),
-    path('register/', views.register_view, name='register'),
-    path('review/', views.review_view, name='review'),
-
-    # esto igual ni lo hago
-    path("review/<int:pk>/", SingleReviewView.as_view(), name="single_review"),
-    path("favorite/", add_favorite, name="add_favorite"),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('review/', ReviewView.as_view(), name='review'),
+    path('reviews/', ReviewListView.as_view(), name='review_list'),
+    path('review/<int:pk>/', SingleReviewView.as_view(), name='single_review'),
+    path('add_favorite/', AddFavoriteView.as_view(), name='add_favorite'),
 ]

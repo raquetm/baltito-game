@@ -1,7 +1,7 @@
 # users/forms.py
 from django import forms
 from django.contrib.auth.models import User
-from .models import UserProfile, Review  # Asegúrate de importar UserProfile
+from .models import UserProfile, Review 
 
 # tengo que arreglar bien todos los forms
 
@@ -28,4 +28,8 @@ class UserRegistrationForm(forms.ModelForm):
 class UserReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ['title', 'content']  # Ajusta los campos según el modelo Review
+        fields = ['title', 'content']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter review title'}),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Write your review here...'}),
+        }

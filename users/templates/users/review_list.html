@@ -1,0 +1,21 @@
+{% extends "users/base_users.html" %}
+
+{% block content %}
+<div class="login-container">
+
+  <h1>All Reviews</h1>
+
+  {% if reviews %}
+    <ul>
+      {% for review in reviews %}
+        <li>
+          <a href="{% url 'single_review' review.pk %}">{{ review.title }}</a> by {{ review.user.username }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No reviews yet. Be the first to write one!</p>
+  {% endif %}
+
+</div>
+{% endblock %}

@@ -1,14 +1,21 @@
-{% extends 'users/base_users.html' %}
-
-{% block title %}Review{% endblock %}
+{% extends "users/base_users.html" %}
 
 {% block content %}
-<div class="form-container">
-    <h2>Leave a Review</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit Review</button>
-    </form>
+<div class="login-container">
+  <h1>Write a Review</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    <div>
+      <label for="id_title">Title:</label>
+      {{ form.title }}
+    </div>
+    <div>
+      <label for="id_content">Content:</label>
+      {{ form.content }}
+    </div>
+    <button type="submit">Submit Review</button>
+  </form>
+
 </div>
 {% endblock %}

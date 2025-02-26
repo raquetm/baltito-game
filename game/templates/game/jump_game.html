@@ -18,12 +18,24 @@
         </div>
         <div id="score" class="score">Score: 0</div>
     </div>
+<div id="instructionsModal" class="modal">
+    <div class="modal-content">
+        <h2>⋆˙⟡ How to Play ⟡˙⋆</h2>
+        <p>Balto loves to run in the flower fields, but he gets very sad when he crushes the flowers. <br><br>Use the "Space" key or "Arrow Up" to help him jump. <br><br>Try to help him as far as you can!</p>
+        <button id="playButton">Play</button>
+    </div>
+</div>
+
 <div id="gameOverModal" class="modal">
     <div class="modal-content">
         <h2>⋆˙⟡ Game Over ⟡˙⋆</h2>
         <p id="playerScore"></p>
-        <button id="restartButton">Play again</button>
-        <button id="reviewButton">Make a review</button>
+        <form id="saveScoreForm" method="post" action="{% url 'save_score' %}">
+            {% csrf_token %}
+            <input type="hidden" name="score" id="scoreInput">
+            <button type="submit">Save Score</button>
+        </form>
+        <button id="restartButton">Play again</button><br>
         <button id="homeButton">Home</button>
     </div>
 </div>

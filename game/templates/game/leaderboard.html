@@ -1,9 +1,40 @@
-{% extends 'game/base.html' %} {% block title %}Leaderboard - Baltito Game
-{% endblock %} {% block content %}
-<h2>Leaderboard</h2>
-<ul>
-  {% for score in scores %}
-  <li>{{ score.user.full_name }}: {{ score.score }}</li>
-  {% endfor %}
-</ul>
+{% extends 'game/base.html' %}
+{% load static %}
+
+{% block title %}Leaderboard - Baltito Game{% endblock %}
+
+{% block content %}
+<h1>LEADERBOARD</h1>
+<table>
+    <thead>
+        <tr>
+            <th>PLAYER</th>
+            <th>SCORE</th>
+            <th>DATE</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for score in scores %}
+        <tr>
+            <td>{{ score.user.user.username }}</td>
+            <td>{{ score.score }}</td>
+            <td>{{ score.played_date }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">No scores yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="review-container">
+    <a href="{% url 'review' %}">
+  <button>Write a Review</button>
+</a>
+<a href="{% url 'review_list' %}">
+  <button>View Reviews</button>
+</a>
+</div>
+
 {% endblock %}
