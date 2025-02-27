@@ -1,16 +1,29 @@
-{% extends "users/base_users.html.html" %}
+{% extends "users/base_users.html" %}
 
 {% block content %}
+<div class="login-container">
   <h1>{{ review.title }}</h1>
   <p>{{ review.content }}</p>
-  <p>Rating: {{ review.rating }}</p>
   <p>By: {{ review.user.username }}</p>
+  {% if review.image %}
+    <img src="{{ review.image.url }}" alt="{{ review.title }}" class="review-image">
+  {% endif %}
   <form method="post" action="{% url 'add_favorite' %}">
     {% csrf_token %}
     <input type="hidden" name="review_id" value="{{ review.id }}">
-    <button type="submit">Add to Favorites</button>
+    {% if is_favorite %}
+        <p>★ favorite review</p>
+      <button type="submit" class="btn">Remove from Favorites</button>
+    {% else %}
+      <button type="submit" class="btn">Add to Favorites</button>
+    {% endif %}
   </form>
-  {% if is_favorite %}
-    <p>This is your favorite review!</p>
+  {% if review.user == request.user %}
+    <form method="post" action="{% url 'delete_review' review.pk %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-delete">Delete Review</button>
+    </form>
+    <a href="{% url 'update_review' review.pk %}" class="btn btn-update">Update Review</a>
   {% endif %}
+</div>
 {% endblock %}

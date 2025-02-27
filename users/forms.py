@@ -1,17 +1,20 @@
-# users/forms.py
 from django import forms
 from django.contrib.auth.models import User
-from .models import UserProfile, Review 
-
-# tengo que arreglar bien todos los forms
+from .models import UserProfile, Review
 
 class UserRegistrationForm(forms.ModelForm):
-    full_name = forms.CharField(max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput())
     subscribed = forms.BooleanField(required=False)
 
     class Meta:
         model = User
-        fields = ['username', 'password', 'email']
+        fields = ['username', 'email', 'password', 'subscribed']
+        help_texts = {
+            'username': None, 
+        }
+        labels = {
+            'email': 'Email', 
+        }
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -20,7 +23,6 @@ class UserRegistrationForm(forms.ModelForm):
             user.save()
             UserProfile.objects.create(
                 user=user,
-                full_name=self.cleaned_data['full_name'],
                 subscribed=self.cleaned_data['subscribed']
             )
         return user
@@ -28,8 +30,4 @@ class UserRegistrationForm(forms.ModelForm):
 class UserReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ['title', 'content']
-        widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter review title'}),
-            'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Write your review here...'}),
-        }
+        fields = ['title', 'content', 'image']

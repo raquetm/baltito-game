@@ -17,8 +17,12 @@
             <h1><a class="index-link" href="{% url 'index' %}">BALTITO GAME <img src="{% static 'img/logo.png' %}" alt="Logo de BALTITO GAME" height="40px" /></a></h1>
         </div>
         <div class="login-buttons">
-            <a href="{% url 'login' %}" class="login-link">Log-in</a>
-            <a href="{% url 'register' %}" class="login-link">Register</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="login-link">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="login-link">Log-in</a>
+                <a href="{% url 'register' %}" class="login-link">Register</a>
+            {% endif %}
         </div>
     </header>
     <nav>
@@ -27,7 +31,9 @@
             <li><a href="{% url 'trailer' %}">Trailer</a></li>
             <li><a href="{% url 'updates' %}">Updates</a></li>
             <li><a href="{% url 'team' %}">Team</a></li>
-            <li><a href="{% url 'jump_game' %}">Jump Game</a></li>
+            <li><a href="{% url 'jump_game' %}">Mini-Game</a></li>
+            <li><a href="{% url 'leaderboard' %}">Leaderboard</a></li>
+            <li><a href="{% url 'review_list' %}">Reviews</a></li>
         </ul>
     </nav>
     <main>

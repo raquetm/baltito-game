@@ -62,10 +62,17 @@ h1 {
 }
 p {
   margin-bottom: 15px;
+  /* margin-left: 100px;
+  margin-right: 100px; */
   text-align: justify;
   line-height: 1.6;
   font-size: 16px;
   color: #333;
+}
+
+#text p{
+    margin-left: 100px;
+  margin-right: 100px;
 }
 
 .p-center {
@@ -138,6 +145,17 @@ header {
 
 header .logo-title {
   margin-left: 20px;
+}
+.balto-responsive {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  border-radius: 10px;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s,
+    height 0.5s ease-in-out;
+}
+
+.balto-responsive:hover {
+  transform: scale(1.1);
 }
 
 header .login-buttons a {
@@ -251,8 +269,6 @@ main {
   font-size: 18px;
 }
 
-/* ...existing styles... */
-
 .card {
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -271,7 +287,7 @@ main {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   background-color: #f9f9f9;
-  height: 500px; 
+  height: 500px;
 }
 
 .card img {
@@ -283,13 +299,13 @@ main {
   transform: scale(0.95);
   height: 0;
   width: 100%;
-  height: 300px; 
-  object-fit: cover; 
+  height: 300px;
+  object-fit: cover;
 }
 .card:hover img {
   opacity: 1;
   transform: scale(1);
-  height: 300px; 
+  height: 300px;
 }
 
 .card h2 {
@@ -379,7 +395,8 @@ table {
   overflow: hidden;
 }
 
-th, td {
+th,
+td {
   padding: 12px;
   text-align: center;
   font-size: 16px;
@@ -414,7 +431,7 @@ tbody tr td {
   color: #702a6d;
 } */
 
-td[colspan="3"] {
+td[colspan='3'] {
   text-align: center;
   font-style: italic;
   color: #bbb;
@@ -426,7 +443,33 @@ td[colspan="3"] {
     font-size: 14px;
   }
 
-  th, td {
+  th,
+  td {
     padding: 10px;
   }
+}
+
+button {
+  width: 10%;
+  color: white;
+  padding: 10px;
+  margin: 5px;
+  background-color: black;
+  /* background-color: #c969c4; */
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button a:hover {
+  text-decoration: none;
+}
+button a {
+  color: white;
+}
+
+button:hover {
+  background-color: #5b2056;
 }

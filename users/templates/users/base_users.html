@@ -17,9 +17,11 @@
             <a href="{% url 'login' %}">Login</a>
             <a href="{% url 'register' %}">Register</a>
         {% endif %}
+        {% if request.resolver_match.url_name in 'review' or request.resolver_match.url_name in 'single_review' %}
+            <a href="{% url 'review_list' %}">Reviews</a>
+        {% endif %}
     </nav>
     </header>
-{% comment %} esto creo que ni funciona: {% endcomment %}
     <div class="background-image"></div> 
     
     <div class="content-container">

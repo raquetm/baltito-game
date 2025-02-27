@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.views import View
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
+from django.views.generic import FormView, DetailView, ListView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views import View
-from django.views.generic import FormView, DetailView, ListView
 from .forms import UserRegistrationForm, UserReviewForm
 from .models import Review
 
@@ -35,7 +36,7 @@ class RegisterView(FormView):
 class ReviewView(FormView):
     template_name = 'users/review.html'
     form_class = UserReviewForm
-    success_url = '/reviews/' 
+    success_url = '/users/reviews/' 
 
     def form_valid(self, form):
         review = form.save(commit=False)
@@ -43,6 +44,25 @@ class ReviewView(FormView):
         review.save()
         return super().form_valid(form)
 
+@method_decorator(login_required(login_url="/users/login/"), name='dispatch')
+class DeleteReviewView(DeleteView):
+    model = Review
+    success_url = reverse_lazy('review_list')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)
+
+@method_decorator(login_required(login_url="/users/login/"), name='dispatch')
+class UpdateReviewView(UpdateView):
+    model = Review
+    form_class = UserReviewForm
+    template_name = 'users/review.html'
+    success_url = reverse_lazy('review_list')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)
 
 @method_decorator(login_required(login_url="/users/login/"), name='dispatch')
 class LogoutView(View):
@@ -67,7 +87,10 @@ class AddFavoriteView(View):
     def post(self, request):
         review_id = request.POST.get("review_id")
         if review_id:
-            request.session["favorite_review"] = review_id
+            if request.session.get("favorite_review") == review_id:
+                del request.session["favorite_review"]
+            else:
+                request.session["favorite_review"] = review_id
         return redirect("single_review", pk=review_id)
 
 class ReviewListView(ListView):

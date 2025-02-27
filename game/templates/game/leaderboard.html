@@ -4,10 +4,11 @@
 {% block title %}Leaderboard - Baltito Game{% endblock %}
 
 {% block content %}
-<h1>LEADERBOARD</h1>
+<h1>LEADERBOARD OF BALTITO JUMPS</h1>
 <table>
     <thead>
         <tr>
+            <th>POSITION</th>
             <th>PLAYER</th>
             <th>SCORE</th>
             <th>DATE</th>
@@ -16,9 +17,10 @@
     <tbody>
         {% for score in scores %}
         <tr>
+            <td> {{ forloop.counter }} </td>
             <td>{{ score.user.user.username }}</td>
             <td>{{ score.score }}</td>
-            <td>{{ score.played_date }}</td>
+            <td>{{ score.played_date|date:"F j" }}</td>        
         </tr>
         {% empty %}
         <tr>
@@ -29,12 +31,16 @@
 </table>
 
 <div class="review-container">
+      <button>
     <a href="{% url 'review' %}">
-  <button>Write a Review</button>
+Write a Review
 </a>
-<a href="{% url 'review_list' %}">
-  <button>View Reviews</button>
+</button>
+
+<button>
+<a href="{% url 'review_list' %}">View Reviews
 </a>
+</button>
 </div>
 
 {% endblock %}

@@ -30,7 +30,7 @@ class LeaderboardView(ListView):
     context_object_name = 'scores'
 
     def get_queryset(self):
-        scores = UserScore.objects.all().order_by('-score')[:20] 
+        scores = UserScore.objects.all().order_by('-score')[:15] 
         print(f"Scores in DB: {scores}")  
         return scores
 
@@ -44,11 +44,10 @@ def save_score(request):
     if request.method == "POST":
         score = request.POST.get('score')
         if score:
-            user = request.user  # O usar el perfil del usuario si es necesario
+            user = request.user  
             UserScore.objects.create(user=user.userprofile, score=score)
 
-            # Redirige a la página de leaderboard después de guardar el puntaje
-            return redirect('leaderboard')  # Reemplaza 'leaderboard' con la URL correcta si es necesario
+            return redirect('leaderboard') 
 
     return redirect('home')
 

@@ -1,21 +1,26 @@
 {% extends "users/base_users.html" %}
 
 {% block content %}
-<div class="login-container">
-
+<div class="reviews-container">
   <h1>All Reviews</h1>
+  <p>Click on a review to see the content!</p>
 
   {% if reviews %}
-    <ul>
+    <div class="reviews-grid">
       {% for review in reviews %}
-        <li>
-          <a href="{% url 'single_review' review.pk %}">{{ review.title }}</a> by {{ review.user.username }}
-        </li>
+        <a href="{% url 'single_review' review.pk %}" class="review-card-link">
+          <div class="review-card">
+            <h2>— {{ review.title }} —</h2>
+            <p>by <em>{{ review.user.username }}</em></p>
+            {% if request.session.favorite_review == review.id|stringformat:"s" %}
+              <span class="favorite-badge">★ favorite</span>
+            {% endif %}
+          </div>
+        </a>
       {% endfor %}
-    </ul>
+    </div>
   {% else %}
     <p>No reviews yet. Be the first to write one!</p>
   {% endif %}
-
 </div>
 {% endblock %}
