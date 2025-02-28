@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import UserProfile
 
+# modelo para almacenar las puntuaciones de los usuarios 
 class UserScore(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     score = models.IntegerField()
@@ -9,7 +10,7 @@ class UserScore(models.Model):
     def __str__(self):
         return f"{self.user.user.username} - {self.score}"  
 
-
+# modelo para gestionar actualizaciones desde admin
 class Update(models.Model):
     title = models.CharField(max_length=200)
     date = models.DateField()

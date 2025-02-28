@@ -1,4 +1,4 @@
-{% extends 'game/base.html' %} {% block title %}About - Baltito Game {% endblock %} {% block content %}
+{% extends 'game/base.html' %}{% load static %} {% block title %}About - Baltito Game {% endblock %} {% block content %}
 <div id="text">
 <h1>ABOUT BALTITO GAME</h1>
 <p>
@@ -24,6 +24,9 @@
   decisions may lead to moments of calm and safety, while others push Balto into
   fear, doubt, and uncertainty. 
   <br>
+</p>
+<img src="{% static 'img/game/flower.png' %}" alt="Pink flower" height="60px" />
+<p>
   <br />&emsp;&emsp;In <em>Baltito Game</em>, the line
   between the real and the imagined blurs. Balto’s fear of the unknown manifests
   itself in distorted visions and auditory cues that confuse the player,
@@ -40,8 +43,10 @@
   character development. Should Balto act on instinct and aggression, or show
   compassion towards other animals in need? Every decision shapes Balto’s
   journey and ultimately determines the game’s outcome. 
-  
-  <br><br />&emsp;&emsp;With its
+  </p>
+<img src="{% static 'img/game/flower.png' %}" alt="Pink flower" height="60px" />
+<p>
+  <br />&emsp;&emsp;With its
   unique psychological elements, evocative storytelling, and emotionally
   immersive gameplay, <em>Baltito Game</em> invites players to experience the
   world through the eyes of a dog—a world filled with discovery, danger, and the

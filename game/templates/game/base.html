@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Baltito Game{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
     <script defer src="{% static 'js/jump_game.js' %}"></script>
     
@@ -47,8 +46,22 @@
             <img src="{% static 'img/doggoDer.jpg' %}" alt="Sidebar Right">
         </div>
     </main>
-    <footer>
-        <p class="p-center-footer">&copy; 2024 BALTITO GAME. All rights reserved.</p>
+ <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <p class="p-center-footer">&copy; 2024 BALTITO GAME. All rights reserved.</p>
+            </div>
+            <div class="footer-column">
+                <p>Follow us on:</p>
+                <div class="social-links">
+                    <a href="https://x.com/RaquelVerducido" target="_blank">Twitter</a> |
+                    <a href="https://www.instagram.com/raquelsitta" target="_blank">Instagram</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <p><a href="{% static 'pdf/newsletter.pdf' %}" download>Download our Newsletter</a></p>
+            </div>
+        </div>
     </footer>
 </body>
 </html>

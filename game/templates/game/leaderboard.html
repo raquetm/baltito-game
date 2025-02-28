@@ -8,10 +8,10 @@
 <table>
     <thead>
         <tr>
-            <th>POSITION</th>
-            <th>PLAYER</th>
-            <th>SCORE</th>
-            <th>DATE</th>
+            <th>Position</th>
+            <th>Player</th>
+            <th>Score</th>
+            <th>Date</th>
         </tr>
     </thead>
     <tbody>
@@ -30,17 +30,6 @@
     </tbody>
 </table>
 
-<div class="review-container">
-      <button>
-    <a href="{% url 'review' %}">
-Write a Review
-</a>
-</button>
-
-<button>
-<a href="{% url 'review_list' %}">View Reviews
-</a>
-</button>
-</div>
+   <a href="{% url 'review' %}" class="btn">Write a Review</a>
 
 {% endblock %}
