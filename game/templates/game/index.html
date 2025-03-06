@@ -1,8 +1,10 @@
-{% extends 'game/base.html' %} {% block title %}Home - Baltito Game{% endblock %} {% block content %}
+{% extends 'game/base.html' %} {% load static %}{% block title %}Home - Baltito Game{% endblock %} {% block content %}
 <h1>WELCOME TO BALTITO GAME</h1>
 <br>
 <div id='text'>
 <p>
   Welcome to the Baltito Game homepage! Select an option from the menu to explore more.
 </p> </div>
+    <img src="{% static 'img/game/baltoJumps.png' %}" alt="Baltito jumping" height="400px" > <br>
+
 {% endblock %} 
